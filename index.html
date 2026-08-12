@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Something Special For You 💖</title>
+  <style>
+    :root {
+      --primary-color: #ff6b81;
+      --accent-color: #ff4757;
+      --bg-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #feada6 100%);
+      --card-bg: rgba(255, 255, 255, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* Background Floating Hearts */
+    .heart-bg {
+      position: fixed;
+      top: -10%;
+      font-size: 20px;
+      color: rgba(255, 71, 87, 0.3);
+      animation: float 8s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Container & Page Views */
+    .container {
+      width: 100%;
+      max-width: 550px;
+      background: var(--card-bg);
+      border-radius: 24px;
+      box-shadow: 0 15px 35px rgba(255, 107, 129, 0.25);
+      padding: 30px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      z-index: 10;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .page {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      animation: fadeIn 0.6s ease-in-out forwards;
+    }
+
+    .page.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Typography */
+    h1 {
+      color: #2f3542;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    p {
+      color: #57606f;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* Buttons */
+    .btn {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      background: #ff6b81;
+    }
+
+    /* Page 1: Card Envelope */
+    .envelope-box {
+      font-size: 70px;
+      margin: 15px 0;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-15px); }
+      60% { transform: translateY(-7px); }
+    }
+
+    /* Page 2: Reasons / Interactive Cards */
+    .reasons-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .reason-card {
+      background: #fff;
+      padding: 14px;
+      border-radius: 16px;
+      border-left: 5px solid var(--primary-color);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    /* Page 3: Apology Letter & Image */
+    .letter-box {
+      background: #fffaf0;
+      border: 2px dashed #ffb8b8;
+      padding: 20px;
+      border-radius: 16px;
+      text-align: left;
+      width: 100%;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+    }
+
+    .photo-frame {
+      width: 100%;
+      max-height: 320px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 4px solid white;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Page 4: Interactive Decision */
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 15px;
+      width: 100%;
+      position: relative;
+      min-height: 60px;
+    }
+
+    #no-btn {
+      position: absolute;
+      background: #a4b0be;
+      box-shadow: none;
+      transition: all 0.2s ease;
+    }
+
+    .success-message {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Hearts Background -->
+  <div id="hearts-container"></div>
+
+  <div class="container">
+    
+    <!-- PAGE 1: INVITATION -->
+    <div class="page active" id="page1">
+      <div class="envelope-box">💌</div>
+      <h1>Something Special For My Cute Little Princess 👑</h1>
+      <p>I built a tiny cozy corner on the internet just for you. Will you open it? ✨</p>
+      <button class="btn" onclick="nextPage(2)">Open My Heart 🌸</button>
+    </div>
+
+    <!-- PAGE 2: I MISS YOU -->
+    <div class="page" id="page2">
+      <h1>I Miss You A Lot More Today 🥺❤️</h1>
+      <p>Every little thing today reminded me of you, and honestly, everything feels incomplete without my favorite person.</p>
+      
+      <div class="reasons-grid">
+        <div class="reason-card">🌸 <b>Your Smile:</b> Nothing brightens my day like seeing you happy.</div>
+        <div class="reason-card">🧸 <b>Your Warmth:</b> Missing your voice, your random stories, and your presence.</div>
+        <div class="reason-card">✨ <b>Your Importance:</b> You are not just a part of my life, you are my whole world.</div>
+      </div>
+
+      <button class="btn" onclick="nextPage(3)">Read My Message 📜</button>
+    </div>
+
+    <!-- PAGE 3: APOLOGY LETTER & PHOTO -->
+    <div class="page" id="page3">
+      <h1>I'm Truly Sorry 💔</h1>
+      
+      <div class="photo-frame">
+        <!-- Replace 'photo.jpg' with your photo filename uploaded to the repository -->
+        <img src="photo.jpg" alt="Our Special Memory">
+      </div>
+
+      <div class="letter-box">
+        <p>
+          My Princess, <br><br>
+          I am so deeply sorry for hurting you. Knowing that I caused you pain makes my heart ache. You mean everything to me, and losing you is a thought I can't even bear. 
+          <br><br>
+          I miss you so much today and every single second we are apart. Please know that I am putting my full heart into learning, growing, and making things right between us. I love you endlessly. ❤️
+        </p>
+      </div>
+
+      <button class="btn" onclick="nextPage(4)">One Last Question 🥺</button>
+    </div>
+
+    <!-- PAGE 4: FORGIVENESS & INTERACTIVE BUTTONS -->
+    <div class="page" id="page4">
+      <div id="question-section">
+        <div style="font-size: 60px;">🥺👉👈</div>
+        <h1>Would you please forgive me?</h1>
+        <p>Can we start over and make things right again? ✨</p>
+
+        <div class="btn-group">
+          <button class="btn" onclick="forgiveMe()">YES! 🥰</button>
+          <button class="btn" id="no-btn" onmouseover="dodgeNoButton()" onclick="dodgeNoButton()">No 😜</button>
+        </div>
+      </div>
+
+      <!-- SUCCESS STATE -->
+      <div class="success-message" id="success-state">
+        <div style="font-size: 60px;">🎉💖😭</div>
+        <h1>Thank You, My Princess!</h1>
+        <p>I promise to cherish you, treat you like the queen you are, and never take your smile for granted ever again. I love you so much! ✨🥰</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Page Navigation
+    function nextPage(pageNumber) {
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      document.getElementById(`page${pageNumber}`).classList.add('active');
+    }
+
+    // Dodging "No" Button Logic
+    function dodgeNoButton() {
+      const btn = document.getElementById('no-btn');
+      const container = document.querySelector('.container');
+      
+      const containerRect = container.getBoundingClientRect();
+      const btnRect = btn.getBoundingClientRect();
+
+      // Calculate relative bounds
+      const maxX = containerRect.width - btnRect.width - 40;
+      const maxY = containerRect.height - btnRect.height - 40;
+
+      const randomX = Math.floor(Math.random() * maxX) - (maxX / 2);
+      const randomY = Math.floor(Math.random() * maxY) - (maxY / 2);
+
+      btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+      
+      const phrases = [
+        "This option isn't available! 😜",
+        "Nice try! 🌸",
+        "Wrong button! 💕",
+        "You have to say Yes! 🥺",
+        "Nope! Try again 💖"
+      ];
+      btn.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+    }
+
+    // Success Action
+    function forgiveMe() {
+      document.getElementById('question-section').style.display = 'none';
+      document.getElementById('success-state').style.display = 'flex';
+      createHeartsBurst();
+    }
+
+    // Generate Background Floating Hearts
+    function createHearts() {
+      const container = document.getElementById('hearts-container');
+      const heart = document.createElement('div');
+      heart.classList.add('heart-bg');
+      heart.innerText = ['💖', '🌸', '✨', '💕', '🧸'][Math.floor(Math.random() * 5)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 3 + 5 + 's';
+      container.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 8000);
+    }
+    setInterval(createHearts, 400);
+
+    // Burst Hearts on Yes
+    function createHeartsBurst() {
+      for (let i = 0; i < 30; i++) {
+        setTimeout(createHearts, i * 50);
+      }
+    }
+  </script>
+</body>
+  </html>
+  
